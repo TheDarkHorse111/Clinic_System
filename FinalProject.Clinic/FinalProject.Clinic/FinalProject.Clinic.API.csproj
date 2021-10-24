@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.13.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FinalProject.Clinic.API\FinalProject.Clinic.Infra.csproj" />
     <ProjectReference Include="..\FinalProject.Clinic.Core\FinalProject.Clinic.Core.csproj" />
   </ItemGroup>
