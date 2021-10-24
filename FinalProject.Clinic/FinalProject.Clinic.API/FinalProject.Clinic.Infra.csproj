@@ -17,8 +17,4 @@
     <ProjectReference Include="..\FinalProject.Clinic.Core\FinalProject.Clinic.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
-
 </Project>

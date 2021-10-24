@@ -2,6 +2,7 @@
 using FinalProject.Clinic.Core;
 using FinalProject.Clinic.Core.Common;
 using FinalProject.Clinic.Core.DTO;
+using FinalProject.Clinic.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace FinalProject.Clinic.Infra.Repository
 {
-    public class UsersRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly IDbContext dbContext;
         public UsersRepository(IDbContext dbContext) 
@@ -18,7 +19,7 @@ namespace FinalProject.Clinic.Infra.Repository
             this.dbContext = dbContext;
         }
 
-        public bool CreateUser(Users users)
+        public bool CreateUsers(Users users)
         {
             var p = new DynamicParameters();
             p.Add("@RoleID", users.RoleId, dbType: DbType.Int32, direction: ParameterDirection.Input);
@@ -47,7 +48,7 @@ namespace FinalProject.Clinic.Infra.Repository
             return result.ToList();
         }
 
-        public bool UpdateCourse(Users users)
+        public bool UpdateUsers(Users users)
         {
             var p = new DynamicParameters();
             p.Add("@UserID", users.UserId, dbType: DbType.Int32, direction: ParameterDirection.Input);
@@ -62,7 +63,7 @@ namespace FinalProject.Clinic.Infra.Repository
             return true;
         }
 
-        public bool DeleteCourse(int id)
+        public bool DeleteUsers(int id)
         {
             var p = new DynamicParameters();
             p.Add("@UserID", id, dbType: DbType.Int32, direction: ParameterDirection.Input);

@@ -1,5 +1,9 @@
 using FinalProject.Clinic.Core.Common;
+using FinalProject.Clinic.Core.Repository;
+using FinalProject.Clinic.Core.Service;
 using FinalProject.Clinic.Infra.Common;
+using FinalProject.Clinic.Infra.Repository;
+using FinalProject.Clinic.Infra.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +33,8 @@ namespace FinalProject.Clinic
         {
             services.AddControllers();
             services.AddScoped<IDbContext, DbContext>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
