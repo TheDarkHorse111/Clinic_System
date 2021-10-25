@@ -35,6 +35,13 @@ namespace FinalProject.Clinic
             services.AddScoped<IDbContext, DbContext>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IDaysRepository, DaysRepository>();
+            services.AddScoped<IDaysService, DaysService>();
+            services.AddScoped<IReservationsRepository, ReservationsRepository>();
+            services.AddScoped<IReservationsService, ReservationsService>();
+
+            services.AddScoped<IVacationsRepository, VacationsRepository>();
+            services.AddScoped<IVacationsService, VacationsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
