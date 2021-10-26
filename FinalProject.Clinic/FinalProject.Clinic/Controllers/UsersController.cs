@@ -20,24 +20,62 @@ namespace FinalProject.Clinic.API.Controllers
             this.usersService = usersService;
         }
 
-        public bool CreateUsers(Users users)
+        [HttpPost]
+        [Route("InsertUsers")]
+        [ProducesResponseType(typeof(List<Users>), StatusCodes.Status200OK)]
+        public bool Users_Insert([FromBody] Users users)
         {
-            return usersService.CreateUsers(users);
+            return usersService.Users_Insert(users);
         }
 
-        public List<Users> GetUsers(GetUsersDTO users)
+        [HttpPost]
+        [Route("GetUsers")]
+        [ProducesResponseType(typeof(List<Users>), StatusCodes.Status200OK)]
+
+        public List<Users> Users_Get(Users users)
         {
-            return usersService.GetUsers(users);
+            return usersService.Users_Get(users);
         }
 
-        public bool UpdateUsers(Users users)
+        [HttpPut]
+        [Route("UpdateUsers")]
+        [ProducesResponseType(typeof(Users), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public bool Users_Update([FromBody] Users users)
         {
-            return usersService.UpdateUsers(users);
+            return usersService.Users_Update(users);
+        }
+        [HttpDelete]
+        [Route("DeleteUsers")]
+        [ProducesResponseType(typeof(Users), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public bool Users_Delete(int id)
+        {
+            return usersService.Users_Delete(id);
         }
 
-        public bool DeleteUsers(int id)
+        [HttpPost]
+        [Route("Login")]
+        [ProducesResponseType(typeof(Users), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Authentication([FromBody] Users login)
         {
-            return usersService.DeleteUsers(id);
+            var token = usersService.Authentication(login);
+
+            if (token == null)
+                return Unauthorized();
+            else
+                return Ok(token);
+
+        }
+
+        [HttpPut]
+        [Route("UpdateUsersPasswords")]
+        [ProducesResponseType(typeof(Users), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public bool Users_UpdatePassword([FromBody]UsersUpdatePasswordDTO users)
+        {
+            return usersService.Users_UpdatePassword(users);
         }
     }
 }

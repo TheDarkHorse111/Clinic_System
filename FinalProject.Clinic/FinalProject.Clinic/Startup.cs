@@ -4,6 +4,7 @@ using FinalProject.Clinic.Core.Service;
 using FinalProject.Clinic.Infra.Common;
 using FinalProject.Clinic.Infra.Repository;
 using FinalProject.Clinic.Infra.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,9 +13,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FinalProject.Clinic
@@ -35,6 +38,8 @@ namespace FinalProject.Clinic
             services.AddScoped<IDbContext, DbContext>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IRolesRepository, RolesRepository>();
+            services.AddScoped<IRolesService, RolesService>(); 
             services.AddScoped<IDaysRepository, DaysRepository>();
             services.AddScoped<IDaysService, DaysService>();
             services.AddScoped<IReservationsRepository, ReservationsRepository>();
@@ -42,6 +47,30 @@ namespace FinalProject.Clinic
 
             services.AddScoped<IVacationsRepository, VacationsRepository>();
             services.AddScoped<IVacationsService, VacationsService>();
+
+
+            //for authentication
+            services.AddAuthentication(
+                          x =>
+                          {
+                              x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                              x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                          }
+                      ).AddJwtBearer(
+                          y =>
+                          {
+                              y.RequireHttpsMetadata = false;
+                              y.SaveToken = true;
+                              y.TokenValidationParameters = new TokenValidationParameters
+                              {
+                                  ValidateIssuerSigningKey = true,
+                                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("[SECRET USED TO SIGN AND VERIFY JWT TOEKN, IT CAN BE ANY STRING]")),
+                                  ValidateIssuer = false,
+                                  ValidateAudience = false
+                              };
+                          }
+
+                      );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

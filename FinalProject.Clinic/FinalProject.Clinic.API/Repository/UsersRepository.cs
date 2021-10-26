@@ -44,7 +44,7 @@ namespace FinalProject.Clinic.Infra.Repository
             p.Add("@RoleID", users.RoleId, dbType: DbType.Int32, direction: ParameterDirection.Input);
             p.Add("@Username", users.Username, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@FullName", users.FullName, dbType: DbType.String, direction: ParameterDirection.Input);
-            IEnumerable<Users> result = dbContext.Connection.Query<Users>("Users_Get", commandType: CommandType.StoredProcedure);
+            IEnumerable<Users> result = dbContext.Connection.Query<Users>("Users_Get", p, commandType: CommandType.StoredProcedure);
             return result.ToList();
         }
 
@@ -52,6 +52,7 @@ namespace FinalProject.Clinic.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("@UserID", users.UserId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            p.Add("@Username", users.Username, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@FullName", users.FullName, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@BirthDay", users.BirthDay, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@Address", users.Address, dbType: DbType.String, direction: ParameterDirection.Input);
@@ -73,15 +74,25 @@ namespace FinalProject.Clinic.Infra.Repository
         }
 
 
-
-
-        public Users Authentication(Users login)
+        public Users Users_Login(Users login)
         {
             var p = new DynamicParameters();
-            p.Add("@UserName", login.Username, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("@Username", login.Username, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@Password", login.Password, dbType: DbType.String, direction: ParameterDirection.Input);
-            IEnumerable<Users> result = dbContext.Connection.Query<Users>("AuthLogin", p, commandType: CommandType.StoredProcedure);
+            IEnumerable<Users> result = dbContext.Connection.Query<Users>("Users_Login", p, commandType: CommandType.StoredProcedure);
             return result.FirstOrDefault();
+
+        }
+
+        public bool Users_UpdatePassword(UsersUpdatePasswordDTO users) 
+        {
+            var p = new DynamicParameters();
+            p.Add("@UserID", users.UserId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            p.Add("@OldPassword", users.OldPassword, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("@NewPassword", users.NewPassword, dbType: DbType.String, direction: ParameterDirection.Input);
+            var result = dbContext.Connection.ExecuteAsync("Users_UpdatePassword", p, commandType: CommandType.StoredProcedure).Result > 0;
+
+            return result;
 
         }
     }

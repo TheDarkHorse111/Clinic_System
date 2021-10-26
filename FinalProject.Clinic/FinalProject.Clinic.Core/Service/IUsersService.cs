@@ -7,9 +7,11 @@ namespace FinalProject.Clinic.Core.Service
 {
     public interface IUsersService
     {
-        bool CreateUsers(Users users);
-        List<Users> GetUsers(GetUsersDTO users);
-        bool UpdateUsers(Users users);
-        bool DeleteUsers(int id);
+        bool Users_Insert(Users users);
+        List<Users> Users_Get(Users users);
+        bool Users_Update(Users users);
+        bool Users_Delete(int id);
+        string Authentication(Users login);
+        bool Users_UpdatePassword(UsersUpdatePasswordDTO users);
     }
 }
