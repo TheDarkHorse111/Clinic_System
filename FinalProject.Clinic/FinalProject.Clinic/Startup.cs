@@ -48,6 +48,9 @@ namespace FinalProject.Clinic
             services.AddScoped<IVacationsRepository, VacationsRepository>();
             services.AddScoped<IVacationsService, VacationsService>();
 
+            services.AddScoped<IWorkingHoursRepository, WorkingHoursRepository>();
+            services.AddScoped<IWorkingHoursService, WorkingHoursService>();
+
 
             //for authentication
             services.AddAuthentication(
